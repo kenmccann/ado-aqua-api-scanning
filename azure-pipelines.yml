@@ -12,6 +12,11 @@ pool:
 
 variables:
   imageName: 'nginx-alpine'
+  AQUA_URL: 'http://34.75.241.250:8080'
+  AQUA_USER: 'scanner'
+  AQUA_REG: 'ACR'
+  TIMEOUT: '60'
+  AQUA_IMAGE_NAME: 'nginx:1.17.1-alpine'
 
 steps:
 - task: Docker@2
@@ -23,10 +28,10 @@ steps:
 - task: Bash@3
   inputs:
     filePath: 'scan-new-image.sh'
-    arguments: 'http://34.75.241.250:8080 ACR nginx-alpine:$(Build.BuildId)'
+    arguments: '$AQUA_URL $AQUA_REG $(imageName):$(Build.BuildId)'
   displayName: 'Scan an image using the Aqua API.'
 - task: Bash@3
   inputs:
     filePath: 'scan-check-queue-status.sh'
-    arguments: 'http://34.75.241.250:8080 ACR nginx-alpine:$(Build.BuildId)'
+    arguments: '$AQUA_URL $AQUA_REG $(imageName):$(Build.BuildId)'
   displayName: 'Check and poll for scan result.'
