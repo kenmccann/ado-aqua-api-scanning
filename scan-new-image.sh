@@ -15,4 +15,4 @@
 curl -vvv "$1/api/v2/images" \
   -u $AQUA_USER:$AQUA_PASS \
   -H 'Content-Type:application/json' \
-  --data-binary '{"registry": "ACR","image": "'"$3"'"}' 
+  --data-binary '{"registry": "'"$2"'","image": "'"$3"'"}' 
